@@ -11,7 +11,23 @@
         {{ sender }} wartet seit
     </div>
     <div class="time">
-        {{ duration_d }} Tagen, {{ duration_h }} Stunden und {{ duration_m }} Minuten
+        {% if duration_d == 1 %}
+            1 Tag,
+        {% elif duration_d > 1 %}
+            {{ duration_d }} Tagen,
+        {% endif %}
+        {{ duration_h }}
+        {% if duration_h == 1 %}
+             Stunde
+        {% elif duration_h > 1 %}
+             Stunden
+        {% endif %}
+         und {{ duration_m }}
+        {% if duration_m == 1 %}
+             Minute.
+        {% elif duration_m > 1 %}
+             Minuten.
+        {% endif %}
     </div>
     <div class="text">
         auf eine Antwort von dir.
