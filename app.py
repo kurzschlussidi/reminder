@@ -17,3 +17,6 @@ def index():
     hours = math.floor(duration.seconds/3600)
     minutes = math.floor((duration.seconds % 3600)/60)
     return render_template('main.html', sender=sender, receiver=receiver, duration_d=days, duration_h=hours, duration_m=minutes)
+
+if __name__ == '__main__':
+    app.run(host="0.0.0.0", port=int("80"), debug=False)
