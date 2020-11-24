@@ -16,16 +16,15 @@
         {% elif duration_d > 1 %}
             {{ duration_d }} Tagen,
         {% endif %}
-        {{ duration_h }}
         {% if duration_h == 1 %}
-             Stunde
+            {{ duration_h }} Stunde und
         {% elif duration_h > 1 %}
-             Stunden
+            {{ duration_h }} Stunden und
         {% endif %}
-         und {{ duration_m }}
+        {{ duration_m }}
         {% if duration_m == 1 %}
              Minute.
-        {% elif duration_m > 1 %}
+        {% elif duration_m != 1 %}
              Minuten.
         {% endif %}
     </div>
