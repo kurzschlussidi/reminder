@@ -11,7 +11,14 @@ def index():
     sender = request.args.get('sender')
     receiver = request.args.get('receiver')
     send_date = request.args.get('date')
-    time_send = datetime.strptime(send_date, '%Y-%m-%d-%H-%M')
+    if not sender or not receiver or not send_date:
+        url = request.url_root
+        return render_template('tutorial.html',url=url)
+    try:
+        time_send = datetime.strptime(send_date, '%Y-%m-%d-%H-%M')
+    except:
+        url = request.url_root
+        return render_template('tutorial.html', url=url)
     duration = datetime.now()-time_send
     days = duration.days
     hours = math.floor(duration.seconds/3600)

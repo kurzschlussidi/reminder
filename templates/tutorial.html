@@ -1,0 +1,17 @@
+<!doctype html>
+<head>
+    <title>Tutorial</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<div class="frame">
+    <h1 class="heading">
+        Hallo User :)
+    </h1>
+    <div class="text">
+        Um diese Website zu verwenden, füge den folgenden Text an das Ende dieser URL hinzu. <br/>
+        ?date=YYYY-MM-DD-HH-MM&sender=YourName&receiver=ReceiversName <br/>
+        zum Beispiel sollte die Adresse dann wiefolgt ausschauen: <br/>
+        {{ url }}?date=2020-11-23-20-22&sender=Markus&receiver=Horst
+    </div>
+</div>
+
