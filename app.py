@@ -3,9 +3,12 @@ from flask import Flask, request, redirect, url_for, render_template
 from random import randint
 import math
 import sqlite3
+import os 
 
 
-database_location = "reminder/data/database.db"
+dir_path = os.path.dirname(os.path.realpath(__file__))
+
+database_location = dir_path + "/data/database.db"
 app = Flask(__name__)
 
 @app.route("/", methods=["POST", "GET"])
@@ -96,7 +99,6 @@ def isKey(key):
     
 
 if __name__ == '__main__':
-    
     if not checkTable():
         makeTable()
     app.run(host="0.0.0.0", port=int("8000"), debug=False)
