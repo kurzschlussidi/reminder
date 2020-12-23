@@ -19,17 +19,11 @@ Connect your reverse-proxy to this url and port.
 
 ### Docker (recommended):
 
-    docker run -d -p 80:8000 kurzschlussidi/reply-timer
+    docker run -d -p 80:8000 kurzschlussidi/reply-timer -v '/mnt/user/appdata/reminder':'/reminder/data':'rw'
 
 Connect your reverse-proxy to this url and port.
 
 ## Usage:
 
-Send the person you want to remind a link with the following syntax:
-
-    yoursubdomain.yourdomain/?date=YYYY-MM-DD-HH-MM&sender=YourName&receiver=ReceiversName
-
-for example:
-
-    reminder.mydomain/?date=2020-11-23-20-22&sender=Markus&receiver=Horst
+Open the Website and generate a link which you can send to the receiver
     

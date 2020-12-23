@@ -5,6 +5,7 @@ import math
 import sqlite3
 
 
+database_location = "reminder/data/database.db"
 app = Flask(__name__)
 
 @app.route("/", methods=["POST", "GET"])
@@ -40,7 +41,7 @@ def reminder(key):
     return render_template('main.html', sender=sender, receiver=receiver, duration_d=days, duration_h=hours, duration_m=minutes)
 
 def checkTable():
-    conn = sqlite3.connect('data/database.db')
+    conn = sqlite3.connect(database_location)
     c = conn.cursor()
     c.execute(''' SELECT count(name) FROM sqlite_master WHERE type='table' AND name='main' ''')
     if c.fetchone()[0]==1 :
@@ -52,7 +53,7 @@ def checkTable():
     
 
 def makeTable():
-    conn = sqlite3.connect('data/database.db')
+    conn = sqlite3.connect(database_location)
     c = conn.cursor()
     c.execute("""CREATE TABLE main (
                 key integer,
@@ -65,7 +66,7 @@ def makeTable():
     return
 
 def setData(sender, receiver, date):
-    conn = sqlite3.connect('data/database.db')
+    conn = sqlite3.connect(database_location)
     c = conn.cursor()
     key = randint(1000000,9999999)
     while isKey(key):
@@ -76,14 +77,14 @@ def setData(sender, receiver, date):
     return key
 
 def getData(key):
-    conn = sqlite3.connect('data/database.db')
+    conn = sqlite3.connect(database_location)
     c = conn.cursor()
     c.execute("SELECT * FROM main WHERE key=?", (key, ))
     (key, sender, receiver, date)= c.fetchone()
     return (sender, receiver, date)
 
 def isKey(key):
-    conn = sqlite3.connect('data/database.db')
+    conn = sqlite3.connect(database_location)
     c = conn.cursor()
     c.execute("SELECT * FROM main WHERE key=?", (key, ))
     if c.fetchone() == None:
