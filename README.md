@@ -19,7 +19,7 @@ Connect your reverse-proxy to this url and port.
 
 ### Docker (recommended):
 
-    docker run -d -p 80:8000 kurzschlussidi/reply-timer -v '/mnt/user/appdata/reminder':'/reminder/data':'rw'
+    docker run -d -p 80:8000 -v '/mnt/user/appdata/reminder':'/reminder/data':'rw' kurzschlussidi/reply-timer
 
 Connect your reverse-proxy to this url and port.
 
