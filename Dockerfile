@@ -4,5 +4,6 @@ ADD static reminder/static
 ADD templates reminder/templates
 ADD app.py reminder/app.py
 RUN cd reminder
+RUN mkdir data
 EXPOSE 8000
 CMD [ "python3", "reminder/app.py" ]
