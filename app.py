@@ -1,7 +1,8 @@
 from datetime import datetime
-from flask import Flask, request, redirect, url_for
-from flask import render_template
+from flask import Flask, request, redirect, url_for, render_template
+from random import randint
 import math
+import sqlite3
 
 
 app = Flask(__name__)
@@ -20,28 +21,81 @@ def editor():
         except:
             return render_template('editor.html',link = None, error = True)
 
-        link = url + "r?sender=" + sender + "&receiver=" + receiver + "&date=" + date
+        key = setData(sender, receiver, date)
+        link = url + str(key)
         return render_template('editor.html',link = link)
     else:
         return render_template('editor.html',link = None)
 
-@app.route("/r")
-def reminder():
-    print("responding")
-    sender = request.args.get('sender')
-    receiver = request.args.get('receiver')
-    send_date = request.args.get('date')
-    if not sender or not receiver or not send_date:
+@app.route("/<key>")
+def reminder(key):
+    if not isKey(key):
         return redirect(url_for("editor"))
-    try:
-        time_send = datetime.strptime(send_date, '%Y-%m-%d-%H-%M')
-    except:
-        return redirect(url_for("editor"))
+    (sender, receiver, date) = getData(key)
+    time_send = datetime.strptime(date, '%Y-%m-%d-%H-%M')
     duration = datetime.now()-time_send
     days = duration.days
     hours = math.floor(duration.seconds/3600)
     minutes = math.floor((duration.seconds % 3600)/60)
     return render_template('main.html', sender=sender, receiver=receiver, duration_d=days, duration_h=hours, duration_m=minutes)
 
+def checkTable():
+    conn = sqlite3.connect('data/database.db')
+    c = conn.cursor()
+    c.execute(''' SELECT count(name) FROM sqlite_master WHERE type='table' AND name='main' ''')
+    if c.fetchone()[0]==1 :
+        conn.close()
+        return True
+    else:
+        conn.close()
+        return False
+    
+
+def makeTable():
+    conn = sqlite3.connect('data/database.db')
+    c = conn.cursor()
+    c.execute("""CREATE TABLE main (
+                key integer,
+                sender text,
+                receiver text,
+                date text
+                )""")
+    conn.commit()
+    conn.close()
+    return
+
+def setData(sender, receiver, date):
+    conn = sqlite3.connect('data/database.db')
+    c = conn.cursor()
+    key = randint(1000000,9999999)
+    while isKey(key):
+        key = randint(1000000,9999999)
+    c.execute("INSERT INTO main VALUES (?, ?, ?, ?)",(key, sender, receiver, date))
+    conn.commit()
+    conn.close()
+    return key
+
+def getData(key):
+    conn = sqlite3.connect('data/database.db')
+    c = conn.cursor()
+    c.execute("SELECT * FROM main WHERE key=?", (key, ))
+    (key, sender, receiver, date)= c.fetchone()
+    return (sender, receiver, date)
+
+def isKey(key):
+    conn = sqlite3.connect('data/database.db')
+    c = conn.cursor()
+    c.execute("SELECT * FROM main WHERE key=?", (key, ))
+    if c.fetchone() == None:
+        conn.close()
+        return False
+    else:
+        conn.close()
+        return True
+    
+
 if __name__ == '__main__':
+    
+    if not checkTable():
+        makeTable()
     app.run(host="0.0.0.0", port=int("8000"), debug=False)
