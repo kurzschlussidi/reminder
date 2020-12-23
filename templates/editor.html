@@ -1,0 +1,33 @@
+<!doctype html>
+<head>
+    <title>Editor</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<div class="frame">
+    <h1 class="heading">
+        Hallo User :)
+    </h1>
+    <div class="text">
+        Um diese Website zu verwenden, fülle bitte die folgenden Felder aus und klicke auf "Link Generieren" <br/>
+        <form action="#" method="POST">
+            <p>Name des Absenders:</p>
+            <p><input type="text" name = "sender" placeholder="Sender"></p>
+            <p>Name des Empfängers:</p>
+            <p><input type="text" name = "receiver" placeholder="Empfänger"></p>
+            <p>Zeitpunkt der letzten Nachricht:</p>
+            <p><input type="text" name = "date" placeholder="YYYY-MM-DD-HH-MM"></p>
+            <p><input type="submit" value="Link Generieren"></p>
+        </form>
+        {% if error %}
+            <p class="data_error">Bitte überprüfen Sie die eingegebenen Daten!</p>
+        {% endif %}
+        
+        {% if link %}
+            <p> Hier ist der erstellte link:</p>
+            <a href="{{ link }}"> {{ link }} </a>
+        {% endif %}
+
+        <p>Mehr Infos kannst du <a href="https://github.com/kurzschlussidi/reminder">hier finden</a></p> 
+    </div>
+</div>
+
