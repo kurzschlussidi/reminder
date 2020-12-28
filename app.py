@@ -4,6 +4,8 @@ from random import randint
 import math
 import sqlite3
 import os 
+import string
+import random
 
 
 dir_path = os.path.dirname(os.path.realpath(__file__))
@@ -59,7 +61,7 @@ def makeTable():
     conn = sqlite3.connect(database_location)
     c = conn.cursor()
     c.execute("""CREATE TABLE main (
-                key integer,
+                key text,
                 sender text,
                 receiver text,
                 date text
@@ -71,9 +73,9 @@ def makeTable():
 def setData(sender, receiver, date):
     conn = sqlite3.connect(database_location)
     c = conn.cursor()
-    key = randint(1000000,9999999)
+    key = genKey()
     while isKey(key):
-        key = randint(1000000,9999999)
+        key = genKey()
     c.execute("INSERT INTO main VALUES (?, ?, ?, ?)",(key, sender, receiver, date))
     conn.commit()
     conn.close()
@@ -97,6 +99,8 @@ def isKey(key):
         conn.close()
         return True
     
+def genKey():
+    return ''.join(random.SystemRandom().choice(string.ascii_lowercase + string.digits) for _ in range(6))
 
 if __name__ == '__main__':
     if not checkTable():
