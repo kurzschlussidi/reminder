@@ -1,6 +1,6 @@
 # reply-timer
 
-Created for a Joke. But maybe someone has a use for it :)
+Created as a Joke. But maybe someone has a use for it :)
 
 Please don't assume that this software is safe to use :)
 
@@ -15,13 +15,13 @@ This a a small python script spinning up an Website on port 8000, which display 
     pip install flask
     python app.py
 
-Connect your reverse-proxy to this url and port.
+Use as is, or point your reverse proxy towards the ip:port of this instance.
 
 ### Docker (recommended):
 
     docker run -d -p 80:8000 -v '/mnt/user/appdata/reminder':'/reminder/data':'rw' kurzschlussidi/reply-timer
 
-Connect your reverse-proxy to this url and port.
+Use as is, or point your reverse proxy towards the ip:port of this instance.
 
 ## Usage:
 
